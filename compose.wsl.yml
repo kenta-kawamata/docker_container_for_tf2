@@ -6,18 +6,21 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     environment:
-      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
-      - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib64
       - DISPLAY=0.0
       - WAYLAND_DISPLAY=wayland-0
+      - XDG_RUNTIME_DIR=/run/user/1002/
+      - PULSE_SERVER=/mnt/wslg/PulseServer
+      - LD_LIBRARY_PATH=/usr/lib/wsl/lib
     restart: always
     tty: true
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+      - /usr/lib/wsl:/usr/lib/wsl
       - /mnt/f:/mnt
       - ../:/home/user/code
     devices:
-      - /dev/usb:/dev/usb
+      - /dev/dxg:/dev/dxg
     #https://docs.docker.com/compose/how-tos/gpu-support/
     deploy:
       resources:
