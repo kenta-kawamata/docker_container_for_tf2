@@ -24,7 +24,7 @@ SHELL ["/bin/bash", "-c"]
 # https://cocoinit23.com/docker-opencv-importerror-libgl-so-1-cannot-open-shared-object-file/
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
-    apt-get update && apt-get install -y --no-install-recommends \
+    apt update && apt install -y --no-install-recommends \
         build-essential \
         cuda-command-line-tools-${CUDA/./-} \
         libcublas-${CUDA/./-} \
@@ -49,13 +49,13 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
 
 # Install TensorRT if not building for PowerPC
 # NOTE: libnvinfer uses cuda11.1 versions
-RUN [[ "${ARCH}" = "ppc64le" ]] || { apt-get update && \
+RUN [[ "${ARCH}" = "ppc64le" ]] || { apt update && \
         apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub && \
         echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /"  > /etc/apt/sources.list.d/tensorRT.list && \
-        apt-get update && \
-        apt-get install -y --no-install-recommends libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda11.0 \
+        apt update && \
+        apt install -y --no-install-recommends libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda11.0 \
         libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda11.0 \
-        && apt-get clean \
+        && apt clean \
         && rm -rf /var/lib/apt/lists/*; }
 
 # For CUDA profiling, TensorFlow requires CUPTI.
@@ -136,13 +136,14 @@ RUN jupyter serverextension enable --py jupyter_http_over_ws
 
 RUN mkdir -p /home/user/code && chmod -R a+rwx /home/user/code/
 RUN mkdir /.local && chmod a+rwx /.local
-RUN apt-get update && apt-get install -y --no-install-recommends wget git
-RUN apt-get autoremove -y && apt-get remove -y wget
+RUN apt update && apt install -y --no-install-recommends wget git
+RUN apt autoremove -y && apt remove -y wget
 WORKDIR /home/user/code
 EXPOSE 8887
 
 RUN python3 -m ipykernel.kernelspec
 
+RUN python3 -m pip install --no-chache-dir opencv-python
 
 #CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root"]
 #CMD ["bash", "-c", "source /etc/bash.bashrc"]
