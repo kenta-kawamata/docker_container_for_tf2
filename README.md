@@ -21,14 +21,14 @@
 ```
 $ ./setup.sh
 $ docker compose exec -it tf2110-cu112-cd81-py38 /bin/bash
-'''
+```
 
 or
 
 ```
 $ docker compose up -f compose.yml -d
 $ docker compose exec -it tf2110-cu112-cd81-py38 /bin/bash
-'''
+```
 
 ## How to use jupyter notebook
 
