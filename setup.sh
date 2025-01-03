@@ -4,6 +4,8 @@
 #If your host OS env is wsl : wsl
 HOST_OS_ENV="linux"
 
+#If文においては必ず[の次に空白を設けること
+#[も含め文字列として認識される
 if [ ${HOST_OS_ENV} = "linux" ]; then
   docker compose -f compose.yml up -d
 elif [ ${HOST_OS_ENV} = "wsl" ]; then
