@@ -13,7 +13,7 @@
 
 |||
 |:-----:|:-----:|
-|os|Ubuntu20.04|
+|os|Ubuntu24.04|
 |nvidia-driver|535.183.01|
 
 ## How to Start
