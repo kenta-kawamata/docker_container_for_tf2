@@ -119,8 +119,8 @@ COPY bashrc /etc/bash.bashrc
 RUN chmod a+rwx /etc/bash.bashrc
 
 
-RUN echo 'export DISPLAY=:0.0' >> ~/.bashrc 
-RUN echo 'export LIBGL_ALWAYS_INDIRECT=0' >> ~/.bashrc
+#RUN echo 'export DISPLAY=:0.0' >> ~/.bashrc 
+#RUN echo 'export LIBGL_ALWAYS_INDIRECT=0' >> ~/.bashrc
 RUN echo 'export PYTHONPATH="${PYTHONPATH}:/programs/YOLOX/"' >> ~/.bashrc
 RUN echo 'export PATH="/usr/local/cuda/bin:$PATH"' >> ~/.bashrc
 RUN echo 'export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"' >> ~/.bashrc
@@ -137,13 +137,26 @@ RUN jupyter serverextension enable --py jupyter_http_over_ws
 RUN mkdir -p /home/user/code && chmod -R a+rwx /home/user/code/
 RUN mkdir /.local && chmod a+rwx /.local
 RUN apt update && apt install -y --no-install-recommends wget git
-RUN apt autoremove -y && apt remove -y wget
+RUN apt autoremove -y
 WORKDIR /home/user/code
 EXPOSE 8887
 
 RUN python3 -m ipykernel.kernelspec
 
 RUN python3 -m pip install --no-cache-dir opencv-python
+
+###############################################################################################################
+# Install VSCodium
+# https://itsfoss.com/install-vscodium-ubuntu/
+RUN wget https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+        -O /usr/share/keyrings/vscodium-archive-keyring.asc
+RUN echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.asc ]  \ 
+        https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main' |  \
+        tee /etc/apt/sources.list.d/vscodium.list
+RUN apt update
+RUN apt install -y codium
+###############################################################################################################
+
 
 #CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root"]
 #CMD ["bash", "-c", "source /etc/bash.bashrc"]
