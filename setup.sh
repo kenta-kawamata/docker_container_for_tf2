@@ -13,3 +13,7 @@ elif [ ${HOST_OS_ENV} = "wsl" ]; then
 else
   echo "${HOST_OS_ENV} is not defined in the setup.bash script"
 fi
+
+# ホストからアクセス可能とする
+# https://zenn.dev/ykesamaru/articles/add7d844f56516
+xhost +local:
