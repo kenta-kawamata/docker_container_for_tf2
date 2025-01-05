@@ -39,3 +39,9 @@ Run in the container
 ```
 
 Connect to `http://localhost:8888` in the browser.
+
+## Use vscodium in the container
+
+```
+# codium --no-sandbox --user-data-dir .
+```
